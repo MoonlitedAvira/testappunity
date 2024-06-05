@@ -1,25 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PointCreator : MonoBehaviour
 {
-    private Sprite _sprite;
-    private readonly List<GameObject> _sprites = new();
-    private void Start()
-    {
-        _sprite = Resources.Load<Sprite>("Sprites/Circle");
-    }
-
+    [SerializeField] private Sprite _sprite;
+    private SpriteRenderer _spriteRenderer;
+    private List<GameObject> _sprites = new();
+    [SerializeField] private float _size = 1f;
     public void CreatePoints(List<Vector3> list)
     {
-        GameObject sprite = new GameObject($"Point{list.Count}");
-        sprite.AddComponent<SpriteRenderer>();
-        sprite.GetComponent<SpriteRenderer>().color = Color.red;
-        sprite.GetComponent<SpriteRenderer>().sprite = _sprite;
-        sprite.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        sprite.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        sprite.transform.position = list[list.Count-1];
+        GameObject sprite = new($"Point{list.Count}");
+        _spriteRenderer = sprite.AddComponent<SpriteRenderer>();
+        _spriteRenderer.color = Color.red;
+        _spriteRenderer.sprite = _sprite;
+        _spriteRenderer.sortingOrder = 1;
+        sprite.transform.localScale = new Vector3(_size, _size, 1f);
+        sprite.transform.position = list[^1];
         _sprites.Add(sprite);
     }
     public void DestroyPoint(int index)

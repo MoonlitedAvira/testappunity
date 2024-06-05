@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class LineCreator : MonoBehaviour
 {
-    private float _lineWidth = 0.12f;
+    [SerializeField] private float _lineWidth = 0.9f;
+    [SerializeField] private Material _material;
+    private LineRenderer _lineRenderer;
     private void Start()
     {
-        gameObject.AddComponent<LineRenderer>();
-        GetComponent<LineRenderer>().startWidth = _lineWidth;
-        GetComponent<LineRenderer>().endWidth = _lineWidth;
-        GetComponent<LineRenderer>().material = Resources.Load("Materials/White") as Material;
+        _lineRenderer = gameObject.AddComponent<LineRenderer>();
+        _lineRenderer.startWidth = _lineWidth;
+        _lineRenderer.endWidth = _lineWidth;
+        _lineRenderer.material = _material;
     }
     public void DrawLines(List<Vector3> list)
     {
-        GetComponent<LineRenderer>().positionCount = list.Count;
-        GetComponent<LineRenderer>().SetPositions(list.ToArray());
+        _lineRenderer.positionCount = list.Count;
+        _lineRenderer.SetPositions(list.ToArray());
     }
 }
